@@ -4,7 +4,8 @@
 # This workaround can be removed as soon as https://github.com/github/markup/issues/1095 is fixed
 
 source_dir=../docs
-output_dir=../docs_processed
+output_dir=../docs
+extension=-auto.adoc
 
 # coloring bash output: https://habr.com/ru/post/119436/
 RED='\033[0;31m'         #  ${RED}
@@ -15,8 +16,9 @@ mkdir -p $output_dir
 
 for file in ${source_dir}/*.adoc; do
   filename=${file##*/}
+  filenameWithoutExtension=${filename%.*}
   echo "Processing $file"
-  ruby asciidoc-coalescer.rb $file -o $output_dir/"$filename" 2>>/tmp/Error
+  ruby asciidoc-coalescer.rb $file -o $output_dir/"$filenameWithoutExtension"$extension 2>>/tmp/Error
 done
 
 result=$(</tmp/Error)

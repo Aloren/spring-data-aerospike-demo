@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git add -f ../docs_processed
+git add -f ../docs
 git config --local user.email "action@github.com"
 git config --local user.name "GitHub Action"
 git commit -m "Update documentation" -a
