@@ -5,7 +5,7 @@
 
 source_dir=../docs
 output_dir=../docs
-extension=-auto.adoc
+generated_extension=-auto.adoc
 
 # coloring bash output: https://habr.com/ru/post/119436/
 RED='\033[0;31m'         #  ${RED}
@@ -16,9 +16,12 @@ mkdir -p $output_dir
 
 for file in ${source_dir}/*.adoc; do
   filename=${file##*/}
+  if [[ $filename == *$generated_extension ]]; then
+    continue;
+  fi
   filenameWithoutExtension=${filename%.*}
   echo "Processing $file"
-  ruby asciidoc-coalescer.rb $file -o $output_dir/"$filenameWithoutExtension"$extension 2>>/tmp/Error
+  ruby asciidoc-coalescer.rb $file -o $output_dir/"$filenameWithoutExtension"$generated_extension 2>>/tmp/Error
 done
 
 result=$(</tmp/Error)
